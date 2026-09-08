@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIH 2026 — Shortlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12131a;
+    --panel: #1b1d29;
+    --panel-2: #23263699;
+    --edge: #2c2f42;
+    --text: #edEdf2;
+    --muted: #8a8d9f;
+    --accent: #f2a93b;
+    --accent-2: #e08a1f;
+    --good: #6fcf97;
+    --bad: #ff6b6b;
+    --neutral: #6b7280;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 0 60px;}
+  header{
+    position:sticky; top:0; z-index:5;
+    background:linear-gradient(180deg, var(--bg) 70%, transparent);
+    padding:22px 20px 14px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:26px;
+    margin:0 0 4px;
+    letter-spacing:-0.02em;
+  }
+  .sub{color:var(--muted); font-size:14px; margin:0 0 16px;}
+  .controls{display:flex; gap:8px;}
+  input[type=text]{
+    flex:1;
+    background:var(--panel);
+    border:1px solid var(--edge);
+    color:var(--text);
+    padding:11px 14px;
+    border-radius:10px;
+    font-size:15px;
+    font-family:inherit;
+  }
+  input[type=text]::placeholder{color:var(--muted);}
+  select{
+    background:var(--panel);
+    border:1px solid var(--edge);
+    color:var(--text);
+    padding:11px 10px;
+    border-radius:10px;
+    font-size:14px;
+    font-family:inherit;
+  }
+  .upload-zone{
+    margin:20px; padding:34px 20px;
+    border:1.5px dashed var(--edge);
+    border-radius:16px;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .upload-zone strong{color:var(--text); display:block; font-size:16px; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;}
+  .upload-zone input{margin-top:14px;}
+  .count-line{padding:4px 20px 10px; color:var(--muted); font-size:13px;}
+  .card{
+    margin:12px 20px;
+    background:var(--panel);
+    border:1px solid var(--edge);
+    border-radius:16px;
+    padding:16px 16px 14px;
+  }
+  .card-top{display:flex; gap:12px; align-items:flex-start; cursor:pointer;}
+  .rank{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--accent);
+    min-width:26px;
+    padding-top:2px;
+  }
+  .card-main{flex:1; min-width:0;}
+  .title{font-size:16px; font-weight:600; line-height:1.35; margin:0 0 5px;}
+  .meta{color:var(--muted); font-size:13px; line-height:1.5;}
+  .meta .dot{margin:0 6px;}
+  .score-row{display:flex; align-items:center; gap:8px; margin-top:10px;}
+  .score-bar-bg{flex:1; height:6px; background:var(--edge); border-radius:4px; overflow:hidden;}
+  .score-bar-fill{height:100%; background:linear-gradient(90deg, var(--accent-2), var(--accent)); border-radius:4px;}
+  .score-num{font-family:'Space Grotesk',sans-serif; font-size:13px; color:var(--accent); font-weight:700; min-width:34px; text-align:right;}
+  .caret{color:var(--muted); font-size:18px; padding-top:2px; transition:transform .2s ease;}
+  .card.open .caret{transform:rotate(180deg);}
+  .details{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .card.open .details{max-height:1000px;}
+  .desc{font-size:14px; line-height:1.6; color:#c9cad8; margin:14px 0 12px; padding-top:14px; border-top:1px solid var(--edge);}
+  .badges{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+  .badge{
+    font-size:12px; padding:4px 10px; border-radius:20px;
+    background:var(--panel-2); border:1px solid var(--edge); color:var(--muted);
+  }
+  .badge.low{color:var(--good); border-color:#6fcf9744;}
+  .badge.high{color:var(--bad); border-color:#ff6b6b44;}
+  .votes{display:flex; gap:8px;}
+  .vote-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
+    padding:9px 6px; border-radius:12px; border:1px solid var(--edge);
+    background:var(--panel-2); color:var(--muted); font-size:12px;
+    font-family:inherit; cursor:pointer;
+  }
+  .vote-btn .emoji{font-size:18px;}
+  .vote-btn.active{border-color:var(--accent); color:var(--accent); background:#f2a93b1a;}
+  .empty{padding:40px 20px; text-align:center; color:var(--muted);}
+  .filter-chips{display:flex; gap:6px; overflow-x:auto; padding:12px 20px 4px; scrollbar-width:none;}
+  .filter-chips::-webkit-scrollbar{display:none;}
+  .chip{
+    white-space:nowrap; font-size:13px; padding:7px 13px; border-radius:20px;
+    border:1px solid var(--edge); color:var(--muted); background:var(--panel);
+    cursor:pointer; flex-shrink:0;
+  }
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#1a1300; font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>SIH 2026 shortlist</h1>
+    <p class="sub" id="subline">Loading ranked.csv…</p>
+    <div class="controls" id="controls" style="display:none;">
+      <input type="text" id="search" placeholder="Search title or org…">
+      <select id="sortSel">
+        <option value="score">Sort: best fit</option>
+        <option value="competition">Sort: least competition</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="upload-zone" id="uploadZone" style="display:none;">
+    <strong>Couldn't auto-load ranked.csv</strong>
+    Make sure ranked.csv sits in the same folder as this file (and, if you're testing locally by double-clicking the HTML, that's expected — browsers block that for security; it'll auto-load fine once hosted). You can still pick it manually below.
+    <br><input type="file" accept=".csv" id="fileInput">
+  </div>
+
+  <div class="filter-chips" id="themeChips" style="display:none;"></div>
+  <p class="count-line" id="countLine" style="display:none;"></p>
+  <div id="list"></div>
+</div>
+
+<script>
+let ROWS = [];
+let activeTheme = "All";
+let sortMode = "score";
+const myVotes = {}; // ps_id -> 'up'|'meh'|'down', local to this session
+
+function num(v){ const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+
+// Small RFC4180-ish CSV parser — no external dependency, so nothing to
+// block on locked-down networks and nothing extra to fetch on GitHub Pages.
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    if (inQuotes){
+      if (c === '"'){
+        if (text[i+1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\r') { /* skip */ }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else field += c;
+    }
+  }
+  if (field.length > 0 || row.length > 0) { row.push(field); rows.push(row); }
+  if (!rows.length) return [];
+  const headers = rows[0].map(h => h.trim());
+  return rows.slice(1)
+    .filter(r => r.length > 1 || (r[0] !== undefined && r[0] !== ''))
+    .map(r => {
+      const obj = {};
+      headers.forEach((h, idx) => obj[h] = r[idx] !== undefined ? r[idx] : '');
+      return obj;
+    });
+}
+
+function showLoaded(){
+  document.getElementById('uploadZone').style.display = 'none';
+  document.getElementById('controls').style.display = 'flex';
+  document.getElementById('subline').textContent = 'Tap a card to expand · tap 👍🤔👎 to vote';
+  buildThemeChips();
+  render();
+}
+
+async function tryAutoLoad(){
+  try {
+    const res = await fetch('ranked.csv', { cache: 'no-store' });
+    if (!res.ok) throw new Error('ranked.csv not found next to this file');
+    const text = await res.text();
+    const data = parseCSV(text).filter(r => r.title);
+    if (!data.length) throw new Error('ranked.csv had no usable rows');
+    ROWS = data;
+    showLoaded();
+  } catch (e) {
+    document.getElementById('subline').textContent = 'Drop in your ranked.csv to get started';
+    document.getElementById('uploadZone').style.display = 'block';
+  }
+}
+tryAutoLoad();
+
+function render(){
+  const list = document.getElementById('list');
+  const q = document.getElementById('search').value.trim().toLowerCase();
+
+  let rows = ROWS.filter(r => {
+    if (activeTheme !== "All" && (r.theme||"") !== activeTheme) return false;
+    if (q && !(`${r.title} ${r.organization}`.toLowerCase().includes(q))) return false;
+    return true;
+  });
+
+  if (sortMode === "score") {
+    rows.sort((a,b) => num(b.final_score) - num(a.final_score));
+  } else {
+    // "least competition" — treat low_competition score as higher=better already
+    rows.sort((a,b) => num(b.low_competition) - num(a.low_competition));
+  }
+
+  document.getElementById('countLine').textContent = `${rows.length} problem statement${rows.length===1?'':'s'}`;
+
+  if (rows.length === 0) {
+    list.innerHTML = '<div class="empty">Nothing matches that search.</div>';
+    return;
+  }
+
+  list.innerHTML = rows.map((r, i) => {
+    const scorePct = Math.max(4, Math.min(100, num(r.final_score) * 100));
+    const ideaBadge = r.idea_count ? `<span class="badge">${r.idea_count} teams already on this</span>` : '';
+    const compBadge = num(r.low_competition) >= 0.7
+      ? `<span class="badge low">Lower competition</span>`
+      : (num(r.low_competition) <= 0.3 ? `<span class="badge high">High competition</span>` : '');
+    const themeBadge = r.theme ? `<span class="badge">${r.theme}</span>` : '';
+    const vote = myVotes[r.ps_id] || null;
+    return `
+      <div class="card" data-id="${r.ps_id}">
+        <div class="card-top" onclick="toggleCard('${r.ps_id}')">
+          <div class="rank">${i+1}</div>
+          <div class="card-main">
+            <p class="title">${r.title || 'Untitled'}</p>
+            <p class="meta">${r.organization || ''}${r.theme ? `<span class="dot">·</span>${r.theme}` : ''}</p>
+            <div class="score-row">
+              <div class="score-bar-bg"><div class="score-bar-fill" style="width:${scorePct}%"></div></div>
+              <div class="score-num">${(num(r.final_score)*100).toFixed(0)}</div>
+            </div>
+          </div>
+          <div class="caret">⌄</div>
+        </div>
+        <div class="details">
+          <p class="desc">${(r.description || 'No description scraped for this one — check the site directly.').slice(0, 600)}${(r.description||'').length > 600 ? '…' : ''}</p>
+          <div class="badges">${themeBadge}${compBadge}${ideaBadge}</div>
+          <div class="votes">
+            <button class="vote-btn ${vote==='up'?'active':''}" onclick="event.stopPropagation(); castVote('${r.ps_id}','up')"><span class="emoji">👍</span>Into it</button>
+            <button class="vote-btn ${vote==='meh'?'active':''}" onclick="event.stopPropagation(); castVote('${r.ps_id}','meh')"><span class="emoji">🤔</span>Maybe</button>
+            <button class="vote-btn ${vote==='down'?'active':''}" onclick="event.stopPropagation(); castVote('${r.ps_id}','down')"><span class="emoji">👎</span>Pass</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function toggleCard(id){
+  const card = document.querySelector(`.card[data-id="${id}"]`);
+  if (card) card.classList.toggle('open');
+}
+
+async function castVote(id, choice){
+  myVotes[id] = myVotes[id] === choice ? null : choice; // tap again to unset
+  try {
+    const key = `sih2026-vote-${id}`;
+    await window.storage.set(key, JSON.stringify({ choice: myVotes[id] }), false);
+  } catch(e) { /* storage optional — vote still shows locally this session */ }
+  render();
+  const card = document.querySelector(`.card[data-id="${id}"]`);
+  if (card) card.classList.add('open');
+}
+
+function buildThemeChips(){
+  const themes = ["All", ...new Set(ROWS.map(r => r.theme).filter(Boolean))];
+  const wrap = document.getElementById('themeChips');
+  wrap.style.display = 'flex';
+  wrap.innerHTML = themes.map(t =>
+    `<div class="chip ${t===activeTheme?'active':''}" onclick="setTheme('${t.replace(/'/g,"\\'")}')">${t}</div>`
+  ).join('');
+}
+function setTheme(t){ activeTheme = t; buildThemeChips(); render(); }
+
+document.getElementById('fileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const data = parseCSV(reader.result).filter(r => r.title);
+    ROWS = data;
+    showLoaded();
+  };
+  reader.readAsText(file);
+});
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('sortSel').addEventListener('change', (e) => { sortMode = e.target.value; render(); });
+</script>
+</body>
+</html>

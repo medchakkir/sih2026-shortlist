@@ -1,0 +1,27 @@
+Team profile: 6-member team of M.Sc. Computer Science students with strong
+problem-solving and coding fundamentals, plus a dedicated presenter for the
+pitch.
+
+Core stack: Python, React, Laravel/PHP, WordPress. Comfortable across
+full-stack development — frontend UI, backend APIs, authentication,
+database design, and deployment.
+
+Past project experience:
+- Built and sold a school certificate/ID generation web application
+  (Laravel) to a real client, handling templated document generation,
+  admin dashboards, and role-based access.
+- Built a multilingual documentation/guide platform (Next.js, MDX) for
+  structured, content-heavy information delivery.
+- General experience with dashboards, admin panels, workflow/document
+  automation, and content-driven web platforms.
+
+Strengths: rapid prototyping of working web applications, clean UI/UX,
+backend logic and data handling, and turning a vague requirement into a
+concrete working product within a tight timeframe.
+
+Team preference: open to any sector/domain — prioritize problems that are
+clearly scoped, buildable as a working software prototype within a
+hackathon timeframe, and where our web/full-stack strengths are a natural
+fit over deep ML/hardware requirements.
+
+Category constraint: Software track only — no hardware/IoT capability.
